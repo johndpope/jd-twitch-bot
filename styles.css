@@ -1,0 +1,231 @@
+[hidden] { display: none !important }
+html, input, body, select, option {
+	background: #121212;
+	font: 18px consolas;
+	color: silver;
+	margin: 0;
+	padding: 0;
+}
+html,body {
+  -webkit-user-select: none;
+	height: 100%;
+}
+table {
+	border-collapse: collapse;
+	white-space: nowrap;
+}
+th, td {
+	border: 1px solid #2F2F2F;
+	padding: 1px 4px 1px 4px;
+}
+td {
+	background: #1F1F1F;
+	color: #F0F0F0;
+	text-align: left;
+}
+tr:hover td {
+	background-color: palegreen;
+	border-color: black;
+	color: black;
+	box-shadow: 0 0 8px palegreen;
+}
+input[type="number"] {
+  -webkit-appearance: textfield;
+     -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+select, option { border: 1px solid #333333; border-radius: 0 5px 5px 0; background: #333050; transition-duration: .3s }
+select:hover { background: #333070 }
+#notification {
+	position: fixed;
+	bottom: -15%;
+	right: 3%;
+	z-index: 3;
+	background: #F3F3F3;
+	color: #333333;
+	padding: 4px 24px 4px 24px;
+	border-radius: 4px;
+  transition: bottom 0.8s;
+  -webkit-transition: bottom 0.8s;
+}
+#context-menu {
+	background: #141414;
+	border: 1px solid #333333;
+	border-radius: 5px;
+	position: absolute;
+	top: -100%;
+	left: 33px;
+	width: 180px;
+}
+#context-menu div { padding: 2px; display: flex; align-items: center; }
+#context-menu p { width: 100%; margin: 0; vertical-align: middle }
+#context-menu #remove-song { border-radius: 5px 5px 0 0 }
+#context-menu #ban-song { border-radius: 0 0 5px 5px }
+#context-menu div:hover { background: #CA2222; box-shadow: 0 0 32px #FA4444; color: #FFFFFF }
+#context-menu div input { background: #444444; width: 50px; padding: 4px }
+#connect, #profile { padding: 4px 4px 0 0; color: #BBDD30; transition-duration: 0.3s }
+#connect:hover { color: #AAFF00 }
+#profile:hover { color: #DD3330 }
+#auth, #ban { padding: 12px 16px 0 16px; background: #117733; color: white; border-radius: 0 5px 5px 0; transition-duration: 0.3s }
+#ban { background: #CA2222 }
+#tab-ctrl { 
+	display: flex; 
+	z-index: 3;
+	justify-content: center; 
+	width: 102%; 
+	align-self: center;
+	background: #A0B0C0;
+}
+#tab-ctrl div { padding: 1% 8% 3% 8%; color: #102030; transition-duration: .1s; text-align: center }
+#tab-ctrl .selected, #tab-ctrl .selected:hover { background: #102030; color: #A0B0C0; box-shadow: 0 0 16px #A0B0C0 }
+#tab-ctrl .selected:hover { box-shadow: 0 0 32px #A0B0C0 }
+#tab-ctrl div:hover { background: #D0E0F0; color: #000000; box-shadow: 0 0 32px #A0B0C0 }
+#page2 table { white-space: normal }
+#page2 td, .box th { border: 1px solid #151515 }
+#page2 th { background: #151515 }
+#page2 td { background: #252525 }
+#page2 tr:hover td { background: indianred; box-shadow: 0 0 8px indianred; color: #FEEAAA }
+#page2 .search-result { background: #333353; color: #DADAFA; border-radius: 10px; padding: 8px; margin-bottom: 8px }
+#page2 .search-result:hover { background: #555585; color: #FAFAFA }
+#page2 .selected { background: #55C5C5; color: #000010 }
+#page2 .selected:hover { background: #88F8F8; color: #000001 }
+#ban-price { background: #CA2222; border: none; border-radius: 0 }
+#ban-price input[type=number] { width: 40px }
+#ban-price input::placeholder { color: #FFFFFF88 }
+#ban-price .custom-btn:hover { color: #FFFAFA; }
+#page3 .flex { flex-wrap: wrap; justify-content: space-around }
+#page3 .cmd-btn { padding: 16px; background: #333333; border-radius: 5px; margin-bottom: 8px }
+#page3 .cmd-btn:hover { background: #444444; box-shadow: 0 0 16px #444444; color: #FAFAFA }
+#page3 .name { background: none; border: none; padding: 2px }
+.invisible {
+	background: none;
+	border: none;
+	padding: 12px;
+	width: 32px;
+}
+#vote-cost .invisible { width: 33% }
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 0px 16px 0px 16px;
+	overflow: hidden;
+}
+body.container { padding: 0 }
+.flex {
+	display: flex;
+	padding: 0px 16px 0px 16px;
+}
+.scrollable {
+	margin-bottom: 52px;
+	flex-grow: 1;
+	height: 100%;
+	white-space: pre-line;
+	overflow: auto;
+	scrollbar-color: #404040AF #151515AF;
+}
+.scrollable::-webkit-scrollbar { background-color: #151515 }
+.scrollable::-webkit-scrollbar-thumb { background-color: #404040 }
+.centered {
+	align-items: center;
+	padding: 0px 16px 0px 16px;
+}
+.num-input-wrap {
+	border-radius: 5px;
+	background-color: #1A1A1A;
+	border: 1px solid black;
+	display: flex;
+}
+.titlebar { padding: 4px 4px 4px 4px; background: #0B0B0B }
+.titlebar .fullwidth, .titlebar .draggable { font-family: "Lucida Console"; padding-top: 3px }
+.draggable { flex: 4; -webkit-user-select: none; -webkit-app-region: drag }
+.dark-gold { color: gold; background-color: #070707DD }
+.fullwidth {
+	width: 100%;
+	box-sizing: border-box;
+}
+.box {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 9%;
+	border: 1px solid #333333;
+	border-radius: 0 0 10px 10px;
+	width: 520px;
+	height: 77%;
+	color: silver;
+}
+.updwn { height: 10px }
+.icon { height: 20px; vertical-align: middle; padding: 0 12px 0 4px }
+.icon:hover { color: #55EE00 }
+.borderless {
+	padding: 0;
+	background: none;
+}
+.custom-btn {
+	float: right;
+	margin: 4px 4px 0px 0px;
+	transition-duration: 0.3s;
+  -webkit-user-select: none;
+}
+.custom-btn:hover {
+	color: #3377EE;
+}
+#next {
+	position: fixed;
+	bottom: 0;
+	height: 52px;
+	background: #115F33;
+	color: white;
+	padding: 16px;
+	text-align: center;
+	transition-duration: .3s;
+}
+#next:hover { background: #337733; box-shadow: 0 0 8px #339933 }
+.settings {
+	color: silver;
+	transition-duration: 0.3s;
+}
+.save {
+	position: absolute;
+	bottom: 0;
+	height: 52px;
+	background: #117733;
+	color: white;
+	padding: 16px;
+	text-align: center;
+	border-radius: 0 0 5px 5px;
+}
+.close {
+	color: indianred;
+}
+.maximize {
+	color: lightsteelblue;
+}
+.minimize {
+	color: lightgreen;
+}
+.settings:hover {
+	color: gold;
+}
+.save:hover, #auth:hover { color: white; background: #11AA55; box-shadow: 0 0 8px #11FF55 }
+#ban:hover { background: #FA5555; box-shadow: 0 0 8px #FA5555 }
+.close:hover {
+	color: red;
+}
+.maximize:hover {
+	color: #33DDFF;
+}
+.minimize:hover {
+	color: #33FF33;
+}
+.spaced { margin: 0px 16px 0px 16px; }
+webview {
+	padding: 4px 0 52px 0;
+	display:inline-flex;
+	height: 100%;
+	overflow: hidden;
+}

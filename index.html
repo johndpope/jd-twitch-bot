@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv='Content-Security-Policy' content="default-src 'self' 'sha256-XNfYdUW7S7AWSxlvq47SGsGIxvvzKwvUGdsFQQ/zXf4='; connect-src 'self' https://api.twitch.tv/; script-src 'self' https://cdnjs.cloudflare.com/"/>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' href='styles.css'>
+	<script src='index.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.4/fuse.min.js" integrity="sha384-GcNnhJfi4Tqz3uqnuFC7N6XPeMKT68L0vrxRQaNNeBQhFx+af1ViYGcLEIA8aKeg" crossorigin="anonymous"></script>
+</head>
+<body class='container'>
+	<div class='fullwidth titlebar flex'><div class='draggable'><img src='assets/bot-icon.png' class='icon'/>DanceBot</div><div id='connect'>CONNECT</div><div id='profile' hidden></div><div id='win-min' class='borderless custom-btn minimize'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 4,20 L 20,20'/></svg></div><div id='win-max' class='borderless custom-btn maximize'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 4,4 L 20,4 L 20,20 L 4,20 L 4,3'/></svg></div><div id='win-close' class='borderless custom-btn close'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke='currentColor' stroke-width='2' d='M 4,4 L 20,20 M 4,20 L 20,4'/></svg></div></div>
+	<div class='fullwidth centered scrollable'>
+	<table class='fullwidth'>
+		<thead>
+			<tr class='dark-gold'>
+				<th colspan='2'>User</th>
+				<th class='fullwidth'>Request<div class='borderless custom-btn settings'><svg width='20px' viewBox='0 0 24 27' xmlns='http://www.w3.org/2000/svg'>
+					<path fill='currentColor'
+						d='M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm8-1.703v3.469c0 .234-.187.516-.438.562l-2.891.438a8.86 8.86 0 0 1-.609 1.422c.531.766 1.094 1.453 1.672 2.156.094.109.156.25.156.391s-.047.25-.141.359c-.375.5-2.484 2.797-3.016 2.797a.795.795 0 0 1-.406-.141l-2.156-1.687a9.449 9.449 0 0 1-1.422.594c-.109.953-.203 1.969-.453 2.906a.573.573 0 0 1-.562.438h-3.469c-.281 0-.531-.203-.562-.469l-.438-2.875a9.194 9.194 0 0 1-1.406-.578l-2.203 1.672c-.109.094-.25.141-.391.141s-.281-.063-.391-.172c-.828-.75-1.922-1.719-2.578-2.625a.607.607 0 0 1 .016-.718c.531-.719 1.109-1.406 1.641-2.141a8.324 8.324 0 0 1-.641-1.547l-2.859-.422A.57.57 0 0 1 0 15.705v-3.469c0-.234.187-.516.422-.562l2.906-.438c.156-.5.359-.969.609-1.437a37.64 37.64 0 0 0-1.672-2.156c-.094-.109-.156-.234-.156-.375s.063-.25.141-.359c.375-.516 2.484-2.797 3.016-2.797.141 0 .281.063.406.156L7.828 5.94a9.449 9.449 0 0 1 1.422-.594c.109-.953.203-1.969.453-2.906a.573.573 0 0 1 .562-.438h3.469c.281 0 .531.203.562.469l.438 2.875c.484.156.953.344 1.406.578l2.219-1.672c.094-.094.234-.141.375-.141s.281.063.391.156c.828.766 1.922 1.734 2.578 2.656a.534.534 0 0 1 .109.344c0 .141-.047.25-.125.359-.531.719-1.109 1.406-1.641 2.141.266.5.484 1.016.641 1.531l2.859.438a.57.57 0 0 1 .453.562z'/>
+  			</svg></div></th>
+  			<th>Mode</th>
+  			<th>Year</th>
+  			<th>Bits</th>
+  			<th>Votes</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div><div class='container centered'>
+	<div id='notification'></div>
+	<div id='context-menu'><div id='remove-song'>Remove</div><div id='remove-all'>Remove all</div><div id='ban-song'><p>Blacklist</p><input id='price' placeholder='Bits' type='number' class='num-input-wrap' /></div></div>
+	<div id='box-auth' class='box dark-gold' hidden><div class='titlebar flex'><div class='fullwidth'><img src='assets/bot-icon.png' class='icon'/>Oauth token</div><div class='borderless custom-btn close'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke='currentColor' stroke-width='5' d='M 4,4 L 20,20 M 4,20 L 20,4'/></svg></div></div>
+		<webview src='https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=q6batx0epp608isickayubi39itsckt&redirect_uri=https://twitchapps.com/tmi/&scope=chat:read+chat:edit+channel:moderate+whispers:read+whispers:edit'></webview>
+		<div class='fullwidth custom-btn save'>Get token</div>
+	</div>
+	<div id='box-connect' class='box dark-gold' hidden><div class='titlebar flex'><div class='fullwidth'><img src='assets/bot-icon.png' class='icon'/>Connect bot</div><div class='borderless custom-btn close'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke='currentColor' stroke-width='5' d='M 4,4 L 20,20 M 4,20 L 20,4'/></svg></div></div>
+	<div class='scrollable'>
+		<div class='container'>
+			<div class='container'><label>Channel</label><input id='bot-name' class='invisible num-input-wrap fullwidth'/></div>
+			<div class='container'><label>Bot authentication code</label><div class='num-input-wrap'><input id='oauth' class='invisible fullwidth'/><div id='auth'>GET</div></div></div>
+			<div class='flex'><div class='icon'><input class='icon' type='checkbox'/></div><label>Auto connect on launch</label></div>
+		</div>
+		<div class='fullwidth custom-btn save'>Connect</div>
+	</div>
+	</div>
+	<div id='box-settings' class='box dark-gold' hidden><div class='titlebar flex'><div class='fullwidth'><img src='assets/bot-icon.png' class='icon'/>Settings</div><div class='borderless custom-btn close'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path stroke='currentColor' stroke-width='5' d='M 4,4 L 20,20 M 4,20 L 20,4'/></svg></div></div
+	><div id='tab-ctrl'><div id='tab1' class='selected'>General</div><div id='tab2' class=''>Blacklist</div><div id='tab3' class=''>Commands</div></div
+	><div class='scrollable'>
+		<div id='page1'><div class='container spaced'><label>Request command</label><div class='num-input-wrap'><input id='cmd-req' class='invisible fullwidth'/><select id='lvl-dance' class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div></div>
+		<div class='flex'>
+			<div class='container'><label>Requests viewers</label><div id='v-req' class='num-input-wrap'><input type='number' class='invisible'/><input type='range' min='0' max='333' class='fullwidth'><div class='container'><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,18 L 12,8 L 22,18'/></svg></div><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,8 L 12,18 L 22,8'/></svg></div></div></div></div>
+			<div class='container'><label>Requests subs</label><div id='s-req' class='num-input-wrap'><input type='number' class='invisible'/><input type='range' min='0' max='333' class='fullwidth'><div class='container'><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,18 L 12,8 L 22,18'/></svg></div><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,8 L 12,18 L 22,8'/></svg></div></div></div></div>
+		</div>
+		<div id='vote-cost' class='container spaced'><label>Bits to vote ratio</label><div class='num-input-wrap'><input type='number' class='invisible'/><input type='range' min='0' max='333' class='fullwidth'><div class='container'><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,18 L 12,8 L 22,18'/></svg></div><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,8 L 12,18 L 22,8'/></svg></div></div></div></div>
+		<div class='container spaced'><label>Add response</label><input id='re-add' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Vote response</label><input id='re-vote' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Limit response</label><input id='re-limit' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Vote fail response</label><input id='re-f-vote' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Add fail response</label><input id='re-f-add' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Banned song response</label><input id='re-banned' class='invisible num-input-wrap fullwidth'/></div>
+		<div class='container spaced'><label>Paid song response</label><input id='re-paid' class='invisible num-input-wrap fullwidth'/></div></div
+		><div id='page2' class='container' hidden>
+			<div class='num-input-wrap'><input id='ban-name' class='invisible fullwidth' placeholder='Song name' /><div id='ban-price' class='num-input-wrap'><input placeholder='Bits' type='number' class='invisible'/><input type='range' min='0' max='333' class='fullwidth'><div class='container'><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,18 L 12,8 L 22,18'/></svg></div><div class='borderless custom-btn updwn'><svg width='20px' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='none' stroke='currentColor' stroke-width='2' d='M 2,8 L 12,18 L 22,8'/></svg></div></div></div><div id='ban'>BAN</div></div>0 bits means the song can't be requested</br>
+			<div id='bl-results'></div>
+			<table><thead><tr><th class='fullwidth'>Name</th><th>Mode</th><th>Bits</th></tr></thead><tbody></tbody></table></div
+		><div id='page3' hidden>
+			<div class='flex'>
+				<div class='cmd-btn fullwidth'>Current Song<div class='cmd-cfg' hidden><div class='num-input-wrap'><input placeholder='Name' class='invisible fullwidth'/><select class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div><input placeholder='Response' class='invisible num-input-wrap fullwidth'/><input placeholder='Fail Response' class='invisible num-input-wrap fullwidth'/></div></div>
+				<div class='cmd-btn fullwidth'>Next Song<div class='cmd-cfg' hidden><div class='num-input-wrap'><input placeholder='Name' class='invisible fullwidth'/><select class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div><input placeholder='Response' class='invisible num-input-wrap fullwidth'/><input placeholder='Fail Response' class='invisible num-input-wrap fullwidth'/></div></div>
+				<div class='cmd-btn fullwidth'>Position<div class='cmd-cfg' hidden><div class='num-input-wrap'><input placeholder='Name' class='invisible fullwidth'/><select class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div><input placeholder='Response' class='invisible num-input-wrap fullwidth'/><input placeholder='Fail Response' class='invisible num-input-wrap fullwidth'/></div></div>
+				<div class='cmd-btn fullwidth'>Wrong Song<div class='cmd-cfg' hidden><div class='num-input-wrap'><input placeholder='Name' class='invisible fullwidth'/><select class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div><input placeholder='Response' class='invisible num-input-wrap fullwidth'/><input placeholder='Fail Response' class='invisible num-input-wrap fullwidth'/></div></div>
+				<div class='cmd-btn fullwidth'>Queue<div class='cmd-cfg' hidden><div class='num-input-wrap'><input placeholder='Name' class='invisible fullwidth'/><select class='fullwidth'><option>Everyone</option><option>Subscriber</option><option>Moderator</option><option>No one</option></select></div><input placeholder='Response' class='invisible num-input-wrap fullwidth'/></div></div>
+			</div>
+		</div
+		><div class='fullwidth custom-btn save'>Save</div>
+	</div>
+	</div>
+	<div id='next' class='fullwidth'>NEXT</div></div>
+</body>
+</html>
